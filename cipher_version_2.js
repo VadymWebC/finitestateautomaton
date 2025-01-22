@@ -1,6 +1,4 @@
-var fs = require("fs")
 ;(() => {
-	var filePath = "./output.txt"
 	var theMorseBase = {
 		".-": "A",
 		"-...": "B",
@@ -109,40 +107,17 @@ var fs = require("fs")
 	]
 
 	var doBinaryParse = theIn => {
-		var theProgram = [...theIn]
+		var theProgram = [...theIn.trim()]
 		var theState = {
 			".": theThing => theThing << 1,
 			"-": theThing => (theThing << 1) | 1,
-			" ": theThing => theThing,
+			" ": theThing => 1,
 			other: () => {},
 		}
-		return theProgram.reduce(
-			(theRes, theCommand) => theState[theCommand](theRes),
-			1
-		)
+		return theMorseArrayBase[
+			theProgram.reduce((theRes, theCommand) => theState[theCommand](theRes), 1)
+		]
 	}
 
-	var theIn = "....."
-
-	var content = ""
-	// content += Reflect.ownKeys(theMorseBase).reduce(
-	// 	(theRes, theKey) =>
-	// 		theRes + `${doBinaryParse(theKey)}\t${theKey}\t${theMorseBase[theKey]}\n`,
-	// 	""
-	// )
-
-	const result = Reflect.ownKeys(theMorseBase).reduce(
-		(theRes, theKey) => (
-			(theRes[doBinaryParse(theKey)] = theMorseBase[theKey]), theRes
-		),
-		[]
-	)
-
-	// fs.writeFile(filePath, content, err => {
-	// 	if (err) {
-	// 		console.error("Ошибка записи файла:", err)
-	// 		return
-	// 	}
-	// })
-	console.log(`Parsed: ${result}`)
+	console.log(doBinaryParse("  .... . -.--   -.. ..- -.. .   "))
 })()
