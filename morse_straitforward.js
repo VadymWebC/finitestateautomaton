@@ -44,6 +44,5 @@
 			.reduce((theRes, theCur) => {
 				return theRes + theMorseBase[theCur]
 			}, "")
-	var res = decodeMorse("  .... . -.--   -.. ..- -.. .")
-	console.log(res)
+	decodeMorse("  .... . -.--   -.. ..- -.. .")
 })()
