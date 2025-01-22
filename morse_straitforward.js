@@ -37,4 +37,8 @@
 		"---..": "8",
 		"----.": "9",
 	}
+	var decodeMorse = theMorseStr => {
+		console.log(theMorseStr.split(" "))
+	}
+	decodeMorse(".... . -.--   .--- ..- -.. .")
 })()
