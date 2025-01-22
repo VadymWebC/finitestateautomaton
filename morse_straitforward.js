@@ -41,7 +41,7 @@
 		console.log(
 			theMorseStr
 				.trim()
-				.split(" ")
+				.split(/\s\s|\s/)
 				.reduce((theRes, theCur) => {
 					return theRes + theMorseBase[theCur]
 				}, "")
