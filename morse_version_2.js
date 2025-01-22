@@ -58,7 +58,8 @@ var fs = require("fs")
 
 	var content = ""
 	content += Reflect.ownKeys(theMorseBase).reduce(
-		(theRes, theKey) => theRes + `${theKey}\t${theMorseBase[theKey]}\n`,
+		(theRes, theKey) =>
+			theRes + `${doBinaryParse(theKey)}\t${theKey}\t${theMorseBase[theKey]}\n`,
 		""
 	)
 	fs.writeFile(filePath, content, err => {
