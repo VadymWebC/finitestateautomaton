@@ -37,15 +37,13 @@
 		"---..": "8",
 		"----.": "9",
 	}
-	var decodeMorse = theMorseStr => {
-		console.log(
-			theMorseStr
-				.trim()
-				.split(/\s\s|\s/)
-				.reduce((theRes, theCur) => {
-					return theRes + theMorseBase[theCur]
-				}, "")
-		)
-	}
-	decodeMorse("  .... . -.--   -.. ..- -.. .")
+	var decodeMorse = theMorseStr =>
+		theMorseStr
+			.trim()
+			.split(/\s\s|\s/)
+			.reduce((theRes, theCur) => {
+				return theRes + theMorseBase[theCur]
+			}, "")
+	var res = decodeMorse("  .... . -.--   -.. ..- -.. .")
+	console.log(res)
 })()
