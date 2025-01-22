@@ -1,4 +1,6 @@
+var fs = require("fs")
 ;(() => {
+	var filePath = "./output.txt"
 	var theMorseBase = {
 		".-": "A",
 		"-...": "B",
@@ -51,6 +53,19 @@
 			1
 		)
 	}
+
 	var theIn = "....."
+
+	var content = ""
+	content += Reflect.ownKeys(theMorseBase).reduce(
+		(theRes, theKey) => theRes + `${theKey}\t${theMorseBase[theKey]}\n`,
+		""
+	)
+	fs.writeFile(filePath, content, err => {
+		if (err) {
+			console.error("Ошибка записи файла:", err)
+			return
+		}
+	})
 	console.log(`Parsed: ${doBinaryParse(theIn)}`)
 })()
