@@ -1,5 +1,5 @@
 ;(() => {
-	var MORSE_CODE = {
+	var theMorseBase = {
 		".-": "A",
 		"-...": "B",
 		"-.-.": "C",
@@ -38,7 +38,14 @@
 		"----.": "9",
 	}
 	var decodeMorse = theMorseStr => {
-		console.log(theMorseStr.split(" "))
+		console.log(
+			theMorseStr
+				.trim()
+				.split(" ")
+				.reduce((theRes, theCur) => {
+					return theRes + theMorseBase[theCur]
+				}, "")
+		)
 	}
-	decodeMorse(".... . -.--   .--- ..- -.. .")
+	decodeMorse("  .... . -.--   -.. ..- -.. .")
 })()
