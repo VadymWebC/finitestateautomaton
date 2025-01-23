@@ -108,15 +108,18 @@
 
 	var doBinaryParse = theIn => {
 		var theProgram = [...theIn.trim()]
+
+		var theStr = ""
+
 		var theState = {
 			".": theThing => theThing << 1,
 			"-": theThing => (theThing << 1) | 1,
-			" ": theThing => 1,
-			other: () => {},
+			" ": theThing => ((theStr += theMorseArrayBase[theThing]), 1),
 		}
-		return theMorseArrayBase[
-			theProgram.reduce((theRes, theCommand) => theState[theCommand](theRes), 1)
-		]
+
+		theProgram.reduce((theRes, theCommand) => theState[theCommand](theRes), 1)
+
+		return theStr
 	}
 
 	console.log(doBinaryParse("  .... . -.--   -.. ..- -.. .   "))
