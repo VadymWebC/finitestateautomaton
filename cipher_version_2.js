@@ -1,44 +1,4 @@
 ;(() => {
-	var theMorseBase = {
-		".-": "A",
-		"-...": "B",
-		"-.-.": "C",
-		"-..": "D",
-		".": "E",
-		"..-.": "F",
-		"--.": "G",
-		"....": "H",
-		"..": "I",
-		".---": "J",
-		"-.-": "K",
-		".-..": "L",
-		"--": "M",
-		"-.": "N",
-		"---": "O",
-		".--.": "P",
-		"--.-": "Q",
-		".-.": "R",
-		"...": "S",
-		"-": "T",
-		"..-": "U",
-		"...-": "V",
-		".--": "W",
-		"-..-": "X",
-		"-.--": "Y",
-		"--..": "Z",
-		"-----": "0",
-		".----": "1",
-		"..---": "2",
-		"...--": "3",
-		"....-": "4",
-		".....": "5",
-		"-....": "6",
-		"--...": "7",
-		"---..": "8",
-		"----.": "9",
-		"": " ",
-	}
-
 	var theMorseArrayBase = [
 		null,
 		" ",
@@ -107,21 +67,47 @@
 	]
 
 	var doBinaryParse = theIn => {
-		var theProgram = [...theIn.trim()]
+		var theProgram = [...theIn, " "]
 
 		var theStr = ""
 
-		var theState = {
+		var theState
+
+		var theInitialState = {
+			".": theThing => ((theState = theCollectState), theState["."](theThing)),
+			"-": theThing => ((theState = theCollectState), theState["-"](theThing)),
+			" ": theThing => theThing,
+		}
+
+		var theCollectState = {
 			".": theThing => theThing << 1,
 			"-": theThing => (theThing << 1) | 1,
-			" ": theThing => ((theStr += theMorseArrayBase[theThing]), 1),
+			" ": theThing => {
+				theState = theStateTwoState
+				theStr += theMorseArrayBase[theThing]
+				return 1
+			},
 		}
+
+		var theStateTwoState = {
+			".": theThing => ((theState = theInitialState), theState["."](theThing)),
+			"-": theThing => ((theState = theInitialState), theState["-"](theThing)),
+			" ": theThing => ((theState = theStateThreeState), 1),
+		}
+
+		var theStateThreeState = {
+			" ": theThing => (
+				(theStr += theMorseArrayBase[theThing]), (theState = theCollectState), 1
+			),
+		}
+
+		theState = theInitialState
 
 		theProgram.reduce((theRes, theCommand) => theState[theCommand](theRes), 1)
 
 		return theStr
 	}
 
-	console.log(doBinaryParse("  .... . -.--   -.. ..- -.. .   "))
+	console.log(doBinaryParse("  .... . -.--   -.. ..- -.. ."))
 	//
 })()
